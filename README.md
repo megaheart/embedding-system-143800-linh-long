@@ -11,7 +11,7 @@
 ## Phân công công việc
 - Trần Phúc Mạnh Linh:
     - Phụ trách phần điều khiển các thiết bị ngoại vi như LCD 16x2, Phím S1-S16, Loa.
-    - Phụ trách phần xử lý va chạm và sinh chướng ngại vật trong game.
+    - Phụ trách phần điều hướng xe, xử lý va chạm và sinh chướng ngại vật trong game.
     - Thiết kế giao diện đồ họa cho game.
 
 - Nguyễn Duy Long:
