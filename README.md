@@ -10,12 +10,14 @@
 
 ## Phân công công việc
 - Trần Phúc Mạnh Linh:
-    - %<Công việc 1>%
-    - %<Công việc 2>%
+    - Phụ trách phần điều khiển các thiết bị ngoại vi như LCD 16x2, Phím S1-S16, Loa.
+    - Phụ trách phần xử lý va chạm và sinh chướng ngại vật trong game.
+    - Thiết kế giao diện đồ họa cho game.
 
 - Nguyễn Duy Long:
-    - %<Công việc 1>%
-    - %<Công việc 2>%
+    - Phụ trách phần cơ chế tăng tốc, giảm tốc, xuyên tường.
+    - Phụ trách phần sinh vật phẩm tăng tốc, giảm tốc, xuyên tường.
+    - Phụ trách phần giao diện kết thúc game.
 
 ## Hướng dẫn chơi
 ### Luật chơi
