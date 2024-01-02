@@ -1,32 +1,15 @@
-# Prerequisites
-*.d
+# dot files
+/.vscode/launch.json
+/.settings
+/.eide/log
+/.eide.usr.ctx.json
 
-# Compiled Object files
-*.slo
-*.lo
-*.o
-*.obj
+# project out
+/build
+/bin
+/obj
+/out
 
-# Precompiled Headers
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
+# eide template
+*.ept
+*.eide-template
