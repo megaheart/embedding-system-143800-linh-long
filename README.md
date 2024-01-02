@@ -3,6 +3,7 @@
 - Thành viên:
     - Trần Phúc Mạnh Linh - 20200352
     - Nguyễn Duy Long - 20204580
+- Thiết bị: Bộ KIT 8051 PRO với vi điều khiển STC89C52
 
 ## Giới thiệu
 %<Khái quát về trò chơi>%
