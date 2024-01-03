@@ -24,6 +24,6 @@ void LCD_GotoXY(char row, char col);            //row: line number (1 or 2)
 void Delay_ms(int interval);
 void Delay_us(int interval);
 void LCD_Clear();
-void LCD_Create_Char(unsigned char location, unsigned char charmap[]);
+void LCD_Create_Char(const unsigned char location, unsigned char charmap[]);
 
 #endif // LCD1602_H_INCLUDED

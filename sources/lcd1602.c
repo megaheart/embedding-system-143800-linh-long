@@ -83,10 +83,10 @@ void LCD_Clear(){
 	LCD_Send_Command(LCD_CLEARDISPLAY);
 }
 
-void LCD_Create_Char(unsigned char location, unsigned char charmap[]){
+void LCD_Create_Char(const unsigned char location, unsigned char charmap[]){
 	unsigned char i;
-	location &= 0x7; // we only have 8 locations 0-7
-	LCD_Send_Command(LCD_SETCGRAMADDR | (location << 3));
+	unsigned char _location = location & 0x7; // we only have 8 locations 0-7
+	LCD_Send_Command(LCD_SETCGRAMADDR | (_location << 3));
 	for(i=0;i<8;i++){
 		LCD_Write_One_Char(charmap[i]);
 	}

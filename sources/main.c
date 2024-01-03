@@ -10,6 +10,13 @@
 #define TL0_50ms     0x00
 #define TH1_ms       0xDB // 10ms
 #define TL1_ms       0xFF
+#define CAR_ICON     0x4
+#define CAR_ICON_HIGH_SPEED 0x5
+#define CAR_ICON_LOW_SPEED 0x6
+#define CAR_ICON_CROSS_WALL 0x7
+#define LOW_SPEED_ICON 0x1
+#define HIGH_SPEED_ICON 0x2
+#define CROSS_WALL_ICON 0x3
 
 unsigned long map         = 0;
 unsigned long carPosition = 0b01;    
@@ -25,10 +32,7 @@ char soundEnable          = 1;
 char isPlaying            = 1;
 char speed                = 20; // tốc độ chơi game
 char timeSpeed            = 0;
-char carIcon              = 0x4;
-char lowSpeedIcon         = 0x1;
-char highSpeedIcon        = 0x2;
-char crossWallIcon        = 0x3;
+char carIcon              = CAR_ICON;
 // char carIconHighSpeed     = 0x5;
 // char carIconLowSpeed      = 0x6;
 // char carIconCrossWall     = 0x7;
@@ -176,7 +180,7 @@ char moveMapForward()
     }
     else{
         speed=20;
-        carIcon='>';
+        carIcon=CAR_ICON;
     }
 
     score++;
@@ -225,15 +229,15 @@ void renderMap() // in màn hình
         isType3 = (typeOb3 >> (i * 2)) & 0b1;
 
         if (isType1){
-            line[i] = crossWallIcon;
+            line[i] = CROSS_WALL_ICON;
             continue;
         }
         else if (isType2){
-            line[i] = lowSpeedIcon;
+            line[i] = LOW_SPEED_ICON;
             continue;
         }
         else if (isType3){
-            line[i] = highSpeedIcon;
+            line[i] = HIGH_SPEED_ICON;
             continue;
         }
         else if (isBlock){
@@ -261,15 +265,15 @@ void renderMap() // in màn hình
         isType3 = (typeOb3 >> (i * 2 + 1)) & 0b1;
             // line[i] = 0xFF;
         if (isType1){
-            line[i] = crossWallIcon;
+            line[i] = CROSS_WALL_ICON;
             continue;
         }
         else if (isType2){
-            line[i] = lowSpeedIcon;
+            line[i] = LOW_SPEED_ICON;
             continue;
         }
         else if (isType3){
-            line[i] = highSpeedIcon;
+            line[i] = HIGH_SPEED_ICON;
             continue;
         }
         else if (isBlock){
@@ -299,7 +303,7 @@ void initObjectsIcon()
         0b00000,
         0b00000
     };
-    LCD_Create_Char(carIcon, customChar);
+    LCD_Create_Char(CAR_ICON, customChar);
 
     // Khởi tạo icon cho object xuyên tường
     customChar[0] = 0b00000;
@@ -310,7 +314,7 @@ void initObjectsIcon()
     customChar[5] = 0b10101;
     customChar[6] = 0b10001;
     customChar[7] = 0b00000;
-    LCD_Create_Char(crossWallIcon, customChar);
+    LCD_Create_Char(CROSS_WALL_ICON, customChar);
 
     // Khởi tạo icon cho object làm chậm
     customChar[0] = 0b00010;
@@ -321,7 +325,7 @@ void initObjectsIcon()
     customChar[5] = 0b01001;
     customChar[6] = 0b00100;
     customChar[7] = 0b00010;
-    LCD_Create_Char(lowSpeedIcon, customChar);
+    LCD_Create_Char(LOW_SPEED_ICON, customChar);
 
     // Khởi tạo icon cho object tăng tốc
     customChar[0] = 0b01000;
@@ -332,7 +336,7 @@ void initObjectsIcon()
     customChar[5] = 0b10010;
     customChar[6] = 0b00100;
     customChar[7] = 0b01000;
-    LCD_Create_Char(highSpeedIcon, customChar);
+    LCD_Create_Char(HIGH_SPEED_ICON, customChar);
 
 }
 
