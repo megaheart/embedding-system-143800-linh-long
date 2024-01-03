@@ -9,7 +9,7 @@
 <!-- %<Khái quát về trò chơi>% -->
 **Tổng quan về Trò chơi:**
 
-Trò chơi này chạy trên một vi điều khiển 8051 và là một trò chơi vượt chướng ngại vật với người chơi điều khiển một chiếc xe hình biểu tượng `'>'`, cố gắng di chuyển qua một bản đồ thay đổi liên tục có đầy chướng ngại vật. Mục tiêu là tránh va chạm với chướng ngại vật để tối đa hóa điểm của người chơi. Trò chơi có chướng ngại vật và nhiều loại item được biểu thị bằng các ký hiệu khác nhau, bao gồm 'X' cho item xóa bỏ tường gần nhất trên đường đua, 'L' cho item làm chậm chiếc xe và 'F' cho item tăng tốc.
+Trò chơi này chạy trên một vi điều khiển 8051 và là một trò chơi vượt chướng ngại vật với người chơi điều khiển một chiếc xe hình biểu tượng `'>'`, cố gắng di chuyển qua một bản đồ thay đổi liên tục có đầy chướng ngại vật. Mục tiêu là tránh va chạm với chướng ngại vật để tối đa hóa điểm của người chơi. Trò chơi có chướng ngại vật và nhiều loại item được biểu thị bằng các ký hiệu khác nhau, bao gồm `'X'` cho item xóa bỏ tường gần nhất trên đường đua, `'L'` cho item làm chậm chiếc xe và `'F'` cho item tăng tốc.
 
 ## Phân công công việc
 - Trần Phúc Mạnh Linh:
