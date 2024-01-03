@@ -9,7 +9,7 @@
 <!-- %<Khái quát về trò chơi>% -->
 **Tổng quan về Trò chơi:**
 
-Trò chơi này chạy trên một vi điều khiển 8051 và là một trò chơi vượt chướng ngại vật với người chơi điều khiển một chiếc xe hình biểu tượng `'>'`, cố gắng di chuyển qua một bản đồ thay đổi liên tục có đầy chướng ngại vật. Mục tiêu là tránh va chạm với chướng ngại vật để tối đa hóa điểm của người chơi. Trò chơi có chướng ngại vật và nhiều loại item được biểu thị bằng các ký hiệu khác nhau, bao gồm `'X'` cho item xóa bỏ tường gần nhất trên đường đua, `'L'` cho item làm chậm chiếc xe và `'F'` cho item tăng tốc.
+Trò chơi này chạy trên một vi điều khiển 8051 và là một trò chơi vượt chướng ngại vật với người chơi điều khiển một chiếc xe, cố gắng di chuyển qua một bản đồ thay đổi liên tục có đầy chướng ngại vật. Mục tiêu là tránh va chạm với chướng ngại vật và đi được thật xa để được điểm càng cao. Trò chơi có chướng ngại vật và nhiều loại item được biểu thị bằng các ký hiệu khác nhau, bao gồm item xuyên tường, item giảm tốc và cho item tăng tốc.
 
 ## Phân công công việc
 - Trần Phúc Mạnh Linh:
@@ -23,25 +23,42 @@ Trò chơi này chạy trên một vi điều khiển 8051 và là một trò ch
     - Phụ trách phần giao diện kết thúc game.
 
 ## Hướng dẫn chơi
-<!-- ### Luật chơi
-%<Luật chơi>%
+### Đối tượng trong game
+- Xe:
+![Alt text](image.png)
+Là đối tượng chính trong game, người chơi điều khiển xe để vượt qua các chướng ngại vật và thu thập các vật phẩm. Xe có thể xuống hoặc lên trên 2 làn đường.
+
+- Chướng ngại vật:
+![Alt text](image-1.png)
+Là vật cản, khi xe va chạm vào chướng ngại vật thì game sẽ kết thúc.
+
+- Vật phẩm tăng tốc:
+![Alt text](image-2.png)
+Giảm tốc độ của xe lên ... lần.
+
+- Vật phẩm giảm tốc:
+![Alt text](image-3.png)
+Tăng tốc độ của xe lên ... lần.
+
+- Vật phẩm xuyên tường:
+![Alt text](image-4.png)
+Xóa bỏ 1 chướng ngại vật phía trước.
+
 
 ### Cách chơi
-%<Cách chơi>% -->
-
-**Cách chơi:**
 
 1. **Điều khiển:**
-   - Nhấn nút ở phía bên phải (`P1_3`) để di chuyển xe lên.
-   - Nhấn nút ở phía bên trái (`P1_0`) để di chuyển xe xuống.
+   - Nhấn nút ở phía bên phải (`S5`) để di chuyển xe lên.
+   - Nhấn nút ở phía bên trái (`S8`) để di chuyển xe xuống.
 
 2. **Mục tiêu:**
    - Điều khiển xe qua bản đồ thay đổi liên tục mà không va chạm với chướng ngại vật.
    - Kiếm điểm cho mỗi hành trình thành công.
 
 3. **Cơ chế trò chơi:**
-   - Bản đồ trò chơi thay đổi liên tục liên tục từ phải qua trái, xuất hiện các chướng ngại vật hoặc item mới.
-   - Va chạm với chướng ngại vật dẫn đến GameOver, với một số item ảnh hưởng đến tốc độ di chuyển của xe hoặc kích hoạt sự kiện cụ thể.
+   - Bản đồ trò chơi thay đổi liên tục liên tục từ phải qua trái, xuất hiện các chướng ngại vật hoặc item tăng tốc, giảm tốc, xuyên tường ngẫu nhiên.
+   - Va chạm với chướng ngại vật dẫn đến kết thúc game.
+   - Thu thập item tăng tốc, giảm tốc, xuyên tường để nhận được hiệu ứng tăng tốc độ, giảm tốc độ và xuyên qua một chướng ngại vật phía trước.
    - Trò chơi tiếp tục cho đến khi có va chạm với chướng ngại vật, lúc đó điểm của người chơi được hiển thị.
 
 **Chức năng của Trò chơi:**

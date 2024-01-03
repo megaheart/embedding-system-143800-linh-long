@@ -25,7 +25,13 @@ char soundEnable          = 1;
 char isPlaying            = 1;
 char speed                = 20; // tốc độ chơi game
 char timeSpeed            = 0;
-char carIcon              = '>';
+char carIcon              = 0x4;
+char lowSpeedIcon         = 0x1;
+char highSpeedIcon        = 0x2;
+char crossWallIcon        = 0x3;
+// char carIconHighSpeed     = 0x5;
+// char carIconLowSpeed      = 0x6;
+// char carIconCrossWall     = 0x7;
 
 
 void printInt(int num, char* dest, int destIndex)
@@ -34,6 +40,7 @@ void printInt(int num, char* dest, int destIndex)
     while(num && cIndex < 16) {
         dest[cIndex] = num % 10 + '0';
         num /= 10;
+        cIndex++;
     }
     char tmp;
     while(destIndex < cIndex) {
@@ -44,6 +51,7 @@ void printInt(int num, char* dest, int destIndex)
         cIndex--;
     }
 }
+
 long randomNewObstacle()
 {
     // return 0b1000000000000000000000000000000;
@@ -91,9 +99,9 @@ void displayFailure()
     soundFreq = 1;
     TR0       = 0;
     LCD_Send_Command(0x80);
-    LCD_Write_String("FAILURE        ");
+    LCD_Write_String("FAILURE         ");
     LCD_Send_Command(0xC0);
-    char scoreStr[] = "Score:         ";
+    char scoreStr[] = "Score:          ";
     // sprintf(scoreStr, "Score: %d", score);
     printInt(score, scoreStr, 7);
 
@@ -217,15 +225,15 @@ void renderMap() // in màn hình
         isType3 = (typeOb3 >> (i * 2)) & 0b1;
 
         if (isType1){
-            line[i] = 'X';
+            line[i] = crossWallIcon;
             continue;
         }
         else if (isType2){
-            line[i] = 'L';
+            line[i] = lowSpeedIcon;
             continue;
         }
         else if (isType3){
-            line[i] = 'F';
+            line[i] = highSpeedIcon;
             continue;
         }
         else if (isBlock){
@@ -253,15 +261,15 @@ void renderMap() // in màn hình
         isType3 = (typeOb3 >> (i * 2 + 1)) & 0b1;
             // line[i] = 0xFF;
         if (isType1){
-            line[i] = 'X';
+            line[i] = crossWallIcon;
             continue;
         }
         else if (isType2){
-            line[i] = 'L';
+            line[i] = lowSpeedIcon;
             continue;
         }
         else if (isType3){
-            line[i] = 'F';
+            line[i] = highSpeedIcon;
             continue;
         }
         else if (isBlock){
@@ -276,6 +284,56 @@ void renderMap() // in màn hình
         line[0] = carIcon;
     }
     LCD_Write_String(line);
+}
+
+void initObjectsIcon()
+{
+    // Khởi tạo icon cho xe
+    unsigned char customChar[] = {
+        0b00000,
+        0b00000,
+        0b11100,
+        0b11111,
+        0b11111,
+        0b11100,
+        0b00000,
+        0b00000
+    };
+    LCD_Create_Char(carIcon, customChar);
+
+    // Khởi tạo icon cho object xuyên tường
+    customChar[0] = 0b00000;
+    customChar[1] = 0b10001;
+    customChar[1] = 0b10101;
+    customChar[3] = 0b11111;
+    customChar[4] = 0b11111;
+    customChar[5] = 0b10101;
+    customChar[6] = 0b10001;
+    customChar[7] = 0b00000;
+    LCD_Create_Char(crossWallIcon, customChar);
+
+    // Khởi tạo icon cho object làm chậm
+    customChar[0] = 0b00010;
+    customChar[1] = 0b00100;
+    customChar[2] = 0b01001;
+    customChar[3] = 0b11010;
+    customChar[4] = 0b11010;
+    customChar[5] = 0b01001;
+    customChar[6] = 0b00100;
+    customChar[7] = 0b00010;
+    LCD_Create_Char(lowSpeedIcon, customChar);
+
+    // Khởi tạo icon cho object tăng tốc
+    customChar[0] = 0b01000;
+    customChar[1] = 0b00100;
+    customChar[2] = 0b10010;
+    customChar[3] = 0b01011;
+    customChar[4] = 0b01011;
+    customChar[5] = 0b10010;
+    customChar[6] = 0b00100;
+    customChar[7] = 0b01000;
+    LCD_Create_Char(highSpeedIcon, customChar);
+
 }
 
 int main()
@@ -310,6 +368,9 @@ int main()
 
     // Khởi tạo LCD
     LCD_init();
+
+    // Khởi tạo icon cho xe và các object
+    initObjectsIcon();
 
     // displayFailure();
 
