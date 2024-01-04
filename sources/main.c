@@ -381,6 +381,7 @@ int main()
     // // Khởi tạo map
     initMap();
     renderMap();
+    LCD_Send_Command(LCD_RETURNHOME);
 
     // Chờ 3s
     Delay_ms(300);
