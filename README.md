@@ -123,7 +123,7 @@ Trò chơi này chạy trên một vi điều khiển 8051 và là một trò ch
 
 ## Thuật Toán Tổng Quát của Trò Chơi:
 
-###1. **Khởi Tạo**:
+### 1. **Khởi Tạo**:
    - Thiết lập các giá trị ban đầu cho bản đồ, vị trí xe.
    - Khởi tạo các biểu tượng cho xe và chướng ngại vật.
    - Khởi tạo các timer và ngắt.
@@ -131,10 +131,10 @@ Trò chơi này chạy trên một vi điều khiển 8051 và là một trò ch
    - Dừng chương trình trong 3s (để đợi người chơi bắt đầu).
    - Bắt đầu các timer và vòng lặp `while`.
 
-###2. **Chuẩn Bị Bản Đồ**:
+### 2. **Chuẩn Bị Bản Đồ**:
    - Tạo bản đồ đầu tiên với các chướng ngại vật ngẫu nhiên.
 
-###3. **Vòng Lặp Trò Chơi**:
+### 3. **Vòng Lặp Trò Chơi**:
    - Vòng lặp ở hàm `main()`: 
       - B1: Kiểm tra các phím người chơi bấm. Nếu người dùng bấm phím `S5` thì di chuyển xe lên, nếu bấm `S8` thì di chuyển xe xuống.
       - B2: Kiểm tra xem phía xe di chuyển lên có vật cản không? Nếu không thì mới di chuyển xe.
@@ -149,7 +149,7 @@ Trò chơi này chạy trên một vi điều khiển 8051 và là một trò ch
 
    - Vòng lặp hàm `TIMER1_ISR()` (Lặp lại sau mỗi 10ms - 50ms): Rung loa (Đảo bit `P1_5`) để tạo âm thanh cho trò chơi.
 
-###4. **Kết Thúc Trò Chơi**:
+### 4. **Kết Thúc Trò Chơi**:
    - Khi người chơi va chạm chướng ngại vật, hiển thị điểm số và thông báo kết thúc trò chơi.
 
 
