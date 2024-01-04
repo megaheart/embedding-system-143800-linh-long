@@ -20,7 +20,7 @@
 
 unsigned long map         = 0;
 unsigned long carPosition = 0b01;    
-unsigned long typeOb1     = 0;   // xuyên tường
+unsigned long typeOb1     = 0;   // xóa tường gần nhất
 unsigned long typeOb2     = 0;   // chậm
 unsigned long typeOb3     = 0 ;  // tăng tốc                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         
 
@@ -33,9 +33,7 @@ char isPlaying            = 1;
 char speed                = 20; // tốc độ chơi game
 char timeSpeed            = 0;
 char carIcon              = CAR_ICON;
-// char carIconHighSpeed     = 0x5;
-// char carIconLowSpeed      = 0x6;
-// char carIconCrossWall     = 0x7;
+
 
 
 void printInt(int num, char* dest, int destIndex)
@@ -159,14 +157,14 @@ char moveMapForward()
     {
         speed=25;
         timeSpeed=12; // thời gian chậm là 12 block
-        carIcon= 'v';
+        carIcon= CAR_ICON_LOW_SPEED;
 
     }
     else if (handleImpactTypeOb3())
     {
         speed=15;
         timeSpeed=12; // thời gian tăng tốc là 12 block
-        carIcon= '^';
+        carIcon= CAR_ICON_HIGH_SPEED;
 
     }
     
@@ -206,6 +204,9 @@ void initMap()
         if (type==3 && newMap!=0){
 
             typeOb3|=newMap;
+        }
+        else{
+            map |= newMap;
         }
         map |= newMap;
 
@@ -305,18 +306,7 @@ void initObjectsIcon()
     };
     LCD_Create_Char(CAR_ICON, customChar);
 
-    // Khởi tạo icon cho object xuyên tường
-    customChar[0] = 0b00000;
-    customChar[1] = 0b10001;
-    customChar[1] = 0b10101;
-    customChar[3] = 0b11111;
-    customChar[4] = 0b11111;
-    customChar[5] = 0b10101;
-    customChar[6] = 0b10001;
-    customChar[7] = 0b00000;
-    LCD_Create_Char(CROSS_WALL_ICON, customChar);
-
-    // Khởi tạo icon cho object làm chậm
+    // Khởi tạo icon cho car giảm tốc
     customChar[0] = 0b00010;
     customChar[1] = 0b00100;
     customChar[2] = 0b01001;
@@ -325,9 +315,9 @@ void initObjectsIcon()
     customChar[5] = 0b01001;
     customChar[6] = 0b00100;
     customChar[7] = 0b00010;
-    LCD_Create_Char(LOW_SPEED_ICON, customChar);
+    LCD_Create_Char(CAR_ICON_LOW_SPEED, customChar);
 
-    // Khởi tạo icon cho object tăng tốc
+    // Khởi tạo icon cho car tăng tốc
     customChar[0] = 0b01000;
     customChar[1] = 0b00100;
     customChar[2] = 0b10010;
@@ -336,7 +326,40 @@ void initObjectsIcon()
     customChar[5] = 0b10010;
     customChar[6] = 0b00100;
     customChar[7] = 0b01000;
+    LCD_Create_Char(CAR_ICON_HIGH_SPEED, customChar);
+
+    // Khởi tạo icon cho object xóa tường gần nhất
+    customChar[0] = 0b00000;
+    customChar[1] = 0b10001;
+    customChar[2] = 0b10101;
+    customChar[3] = 0b11111;
+    customChar[4] = 0b11111;
+    customChar[5] = 0b10101;
+    customChar[6] = 0b10001;
+    customChar[7] = 0b00000;
+    LCD_Create_Char(CROSS_WALL_ICON, customChar);
+
+    // Khởi tạo icon cho object tăng tốc
+    customChar[0] = 0b00000;
+    customChar[1] = 0b00100;
+    customChar[2] = 0b01110;
+    customChar[3] = 0b11111;
+    customChar[4] = 0b01110;
+    customChar[5] = 0b01110;
+    customChar[6] = 0b00000;
+    customChar[7] = 0b00000;
     LCD_Create_Char(HIGH_SPEED_ICON, customChar);
+
+    // Khởi tạo icon cho object giảm tốc
+    customChar[0] = 0b00000;
+    customChar[1] = 0b00000;
+    customChar[2] = 0b01110;
+    customChar[3] = 0b01110;
+    customChar[4] = 0b11111;
+    customChar[5] = 0b01110;
+    customChar[6] = 0b00100;
+    customChar[7] = 0b00000;
+    LCD_Create_Char(LOW_SPEED_ICON, customChar);
 
 }
 
@@ -394,29 +417,24 @@ int main()
 
     while (1) {
         if (isPlaying) {
-            // Nhấn phím S1 để rẽ trái
-            // Nhấn phím S4 để rẽ phải
-            // P1_7 = 1;
+
             P1_6 = 0;
-            // P1_5 = 1;
-            // P1_4 = 1;
+
 
             if (P1_3 == 0) { // bên phải: đi lên
                 carPosition = 0b01;
-                if (handleImpact()) { // nếu đang đi mà bên trên có vật cản thì ko đi lên đc
+                
+                if (!handleImpactTypeOb1()&&!handleImpactTypeOb2()&&!handleImpactTypeOb3()&& handleImpact()) { // nếu đang đi mà bên trên có vật cản thì ko đi lên đc
                     carPosition = 0b10;
                 }
             }
             if (P1_0 == 0) { // bên trái: đi xuống
                 carPosition = 0b10;
-                if (handleImpact()) {
+                if (!handleImpactTypeOb1()&&!handleImpactTypeOb2()&&!handleImpactTypeOb3()&&handleImpact()) {
                     carPosition = 0b01;
                 }
             }
 
-            // if (handleImpact()) {
-            //     displayFailure();
-            // } else
             renderMap();
 
             Delay_us(30000);
