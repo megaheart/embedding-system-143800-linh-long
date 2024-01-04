@@ -25,24 +25,34 @@ Trò chơi này chạy trên một vi điều khiển 8051 và là một trò ch
 ## Hướng dẫn chơi
 ### Đối tượng trong game
 - Xe:
-![Alt text](image.png)
-Là đối tượng chính trong game, người chơi điều khiển xe để vượt qua các chướng ngại vật và thu thập các vật phẩm. Xe có thể xuống hoặc lên trên 2 làn đường.
+
+   ![Alt text](image.png)
+   
+   Là đối tượng chính trong game, người chơi điều khiển xe để vượt qua các chướng ngại vật và thu thập các vật phẩm. Xe có thể xuống hoặc lên trên 2 làn đường.
 
 - Chướng ngại vật:
-![Alt text](image-1.png)
-Là vật cản, khi xe va chạm vào chướng ngại vật thì game sẽ kết thúc.
+
+   ![Alt text](image-1.png)
+
+   Là vật cản, khi xe va chạm vào chướng ngại vật thì game sẽ kết thúc.
 
 - Vật phẩm tăng tốc:
-![Alt text](image-2.png)
-Giảm tốc độ của xe lên ... lần.
+
+   ![Alt text](image-2.png)
+
+   Giảm tốc độ của xe lên ... lần.
 
 - Vật phẩm giảm tốc:
-![Alt text](image-3.png)
-Tăng tốc độ của xe lên ... lần.
+
+   ![Alt text](image-3.png)
+
+   Tăng tốc độ của xe lên ... lần.
 
 - Vật phẩm xuyên tường:
-![Alt text](image-4.png)
-Xóa bỏ 1 chướng ngại vật phía trước.
+
+   ![Alt text](image-4.png)
+   
+   Xóa bỏ 1 chướng ngại vật phía trước.
 
 
 ### Cách chơi
@@ -61,62 +71,74 @@ Xóa bỏ 1 chướng ngại vật phía trước.
    - Thu thập item tăng tốc, giảm tốc, xuyên tường để nhận được hiệu ứng tăng tốc độ, giảm tốc độ và xuyên qua một chướng ngại vật phía trước.
    - Trò chơi tiếp tục cho đến khi có va chạm với chướng ngại vật, lúc đó điểm của người chơi được hiển thị.
 
-**Chức năng của Trò chơi:**
+## Các Hàm và Chức Năng của Chúng:
 
-1. **Tạo Bản đồ:**
-   - Chướng ngại vật và item được tạo ngẫu nhiên, mang lại độ đa dạng trong mỗi lần chơi.
-   - Các loại item và chướng ngại vật khác nhau thêm phức tạp và đa dạng vào lối chơi.
+### a. `printInt(int num, char* dest, int destIndex)`:
+- **Chức năng**: Chuyển đổi số nguyên thành chuỗi và lưu vào mảng `dest` bắt đầu từ vị trí `destIndex`.
+- **Cách thức hoạt động**: Chia số nguyên để lấy từng chữ số và chuyển chúng thành ký tự. Đảo ngược chuỗi nếu cần thiết.
 
-2. **Xử lý Va chạm:**
-   - Phát hiện va chạm với chướng ngại vật hoặc item, ảnh hưởng đến trạng thái trò chơi.
-   - Trò chơi phản ứng với va chạm bằng cách điều chỉnh tốc độ xe hoặc kích hoạt các sự kiện cụ thể.
+### b. `randomNewObstacle()`:
+- **Chức năng**: Tạo ra một chướng ngại vật mới trên bản đồ.
+- **Cách thức hoạt động**: Dựa trên trạng thái hiện tại của `map`, hàm quyết định sinh ra chướng ngại vật mới, có thể là trống, chéo hoặc thẳng so với chướng ngại vật trước.
 
-3. **Giao diện Người dùng:**
-   - Trạng thái của trò chơi, bao gồm điểm số và các sự kiện có thể, được hiển thị trên một màn hình LCD 16x2.
-   - Các thông báo thông tin, như màn hình thất bại, được hiển thị cho người chơi.
+### c. Các hàm `handleImpact()` và `handleImpactTypeX()`:
+- **Chức năng**: Kiểm tra xem có va chạm giữa xe và chướng ngại vật hay các vật phẩm không.
+- **Cách thức hoạt động**: Sử dụng toán tử `&` bit để xác định va chạm.
 
-4. **Âm thanh Phản hồi:**
-   - Triển khai âm thanh phản hồi, như tiếng bíp ngắn hoặc bíp dài, để tăng cường trải nghiệm chơi game.
+### d. `displayFailure()`:
+- **Chức năng**: Hiển thị thông điệp thất bại và điểm số khi xe va chạm với chướng ngại vật.
+- **Cách thức hoạt động**: Dừng trò chơi, cập nhật tần số âm thanh và hiển thị thông điệp trên LCD.
 
+### e. `moveMapForward()`:
+- **Chức năng**: Di chuyển bản đồ về phía trước và cập nhật các chướng ngại vật.
+- **Cách thức hoạt động**: Sinh ra chướng ngại vật mới, cập nhật các loại chướng ngại vật, và kiểm tra va chạm.
 
-## Chi tiết thuật toán
-<!-- %<Trò chơi được xây dựng trên công nghệ gì>%
+### f. `initMap()` và `renderMap()`:
+- **Chức năng**: Khởi tạo và hiển thị bản đồ trò chơi.
+- **Cách thức hoạt động**: `initMap` khởi tạo bản đồ ban đầu. `renderMap` hiển thị bản đồ và vị trí xe trên LCD.
 
-%<Thuật toán>%
+### g. `initObjectsIcon()`:
+- **Chức năng**: Khởi tạo các biểu tượng cho xe và các chướng ngại vật.
+- **Cách thức hoạt động**: Định nghĩa các biểu tượng dưới dạng mảng byte và tải chúng vào LCD.
 
-%<Các hàm chính>% -->
-Thuật toán được xây dựng trên nền tảng ngôn ngữ C và các thư viện hỗ trợ của vi điều khiển 8051. Trò chơi được xây dựng trên một mô hình bản đồ thay đổi liên tục liên tục, trong đó mỗi hàng của bản đồ được lưu trữ trong một mảng 1 chiều. Mỗi phần tử của mảng đại diện cho một ô trên bản đồ, với các giá trị khác nhau để biểu thị các loại chướng ngại vật và item khác nhau. Trạng thái của trò chơi được lưu trữ trong các biến toàn cục, bao gồm điểm số, tốc độ xe, vị trí của xe, v.v. Các hàm được sử dụng để xử lý các sự kiện cụ thể, bao gồm xử lý va chạm, tạo bản đồ, v.v. Trò chơi được thực hiện trong một vòng lặp vô hạn, trong đó trạng thái của trò chơi được cập nhật và bản đồ được vẽ lên màn hình LCD.
+### h. `main()`:
+- **Chức năng**: Hàm chính điều khiển luồng trò chơi.
+- **Cách thức hoạt động**: Khởi tạo LCD, bản đồ, và vào vòng lặp vô hạn để xử lý nhập liệu từ người chơi và cập nhật trạng thái trò chơi.
 
+### i. Các hàm ngắt `TIMER0_ISR()` và `TIMER1_ISR()`:
+- **Chức năng**: Xử lý các sự kiện ngắt từ bộ đếm thời gian.
+- **Cách thức hoạt động**: `TIMER0_ISR` cập nhật bản đồ và trạng thái trò chơi theo chu kỳ. `TIMER1_ISR` xử lý âm thanh.
 
-1. **Các lệnh Include:**
-   - `#include <mcs51/8051.h>`: Bao gồm tệp header cụ thể cho vi điều khiển 8051.
-   - `"lcd1602.h"`: Bao gồm một tệp header để giao tiếp với màn hình LCD 16x2.
-   - Các thư viện tiêu chuẩn của C như `<stdio.h>` và `<stdlib.h>` cũng được bao gồm.
+## Thuật Toán Tổng Quát của Trò Chơi:
 
-2. **Định nghĩa Macro:**
-   - Định nghĩa cho các chân phần cứng (`SPEAKER`, `LED7SEG_DATA`) và giá trị của bộ đếm thời gian (`TH0_50ms`, `TL0_50ms`, `TH1_ms`, `TL1_ms`).
+1. **Khởi Tạo**:
+   - Thiết lập các giá trị ban đầu cho bản đồ, vị trí xe.
+   - Khởi tạo các biểu tượng cho xe và chướng ngại vật.
+   - Khởi tạo các timer và ngắt.
+   - Hiển thị bản đồ trò chơi lên LCD.
+   - Dừng chương trình trong 3s (để đợi người chơi bắt đầu).
+   - Bắt đầu các timer và vòng lặp `while`.
 
-3. **Biến Toàn cục:**
-   - Biến để lưu trạng thái trò chơi (`map`, `carPosition`, `typeOb1`, `typeOb2`, `typeOb3`, v.v.).
-   - Biến liên quan đến cơ chế trò chơi (`score`, `soundFreq`, `soundEnable`, `isPlaying`, `speed`, `timeSpeed`, `carIcon`).
+2. **Chuẩn Bị Bản Đồ**:
+   - Tạo bản đồ đầu tiên với các chướng ngại vật ngẫu nhiên.
 
-4. **Các Hàm:**
-   - `printInt`: Chuyển đổi một số nguyên thành chuỗi để hiển thị trên màn hình LCD.
-   - `randomNewObstacle`: Tạo ra một mẫu chướng ngại vật mới cho trò chơi.
-   - `handleImpact`, `handleImpactTypeOb1`, `handleImpactTypeOb2`, `handleImpactTypeOb3`: Các hàm để kiểm tra va chạm.
-   - `displayFailure`: Hiển thị thông báo thất bại trên màn hình LCD.
-   - `moveMapForward`: Di chuyển bản đồ trò chơi về phía trước và xử lý chướng ngại vật.
-   - `initMap`: Khởi tạo bản đồ trò chơi với chướng ngại vật ngẫu nhiên.
-   - `renderMap`: Vẽ bản đồ trò chơi lên màn hình LCD.
+3. **Vòng Lặp Trò Chơi**:
+   - Vòng lặp ở hàm `main()`: 
+      - B1: Kiểm tra các phím người chơi bấm. Nếu người dùng bấm phím `S5` thì di chuyển xe lên, nếu bấm `S8` thì di chuyển xe xuống.
+      - B2: Kiểm tra xem phía xe di chuyển lên có vật cản không? Nếu không thì mới di chuyển xe.
+      - B3: Hiển thị trạng thái trò chơi trên LCD.
 
-5. **Hàm Main:**
-   - Khởi tạo phần cứng và màn hình LCD.
-   - Khởi tạo bản đồ trò chơi.
-   - Bước vào một vòng lặp trong đó trò chơi chạy.
-   - Xử lý đầu vào của người chơi (nhấn nút).
-   - Cập nhật trạng thái trò chơi và kiểm tra va chạm.
-   - Vẽ bản đồ trò chơi lên màn hình LCD.
-   - Trò chơi tiếp tục cho đến khi đáp ứng điều kiện thất bại.
+   - Vòng lặp hàm `TIMER0_ISR()` (Lặp lại sau mỗi 0.75s nếu xe đi với tốc độ nhanh, 1.5s nếu xe đi với tốc độ chậm, 1s nếu xe đi với tốc độ bình thường):
+      - B1: Sinh phần tiếp theo của bản đồ và di chuyển bản đồ về phía trước.
+      - B2: Kiểm tra xem xe có va chạm vào vật phẩm nào (tăng tốc, giảm tốc, xuyên tường) hay không? Nếu có thì thực hiện hiệu ứng của vật phẩm đó cũng như thay đổi icon xe theo trạng thái tương ứng. 
+      - B3: Kiểm tra xem xe có va chạm với chướng ngại vật hay không? Nếu có thì kết thúc trò chơi. Nếu không thì sang bước 3.
+      - B4: Cộng thêm 1 điểm cho người chơi.
+      - B5: Hiển thị trạng thái trò chơi trên LCD.
+
+   - Vòng lặp hàm `TIMER1_ISR()` (Lặp lại sau mỗi 10ms - 50ms): Rung loa (Đảo bit `P1_5`) để tạo âm thanh cho trò chơi.
+
+4. **Kết Thúc Trò Chơi**:
+   - Khi người chơi va chạm, hiển thị điểm số và thông báo kết thúc trò chơi.
 
 
 Tóm lại, trò chơi cung cấp một trải nghiệm đơn giản và hấp dẫn, thách thức người chơi thể hiện sự chính xác và kỹ năng phản ứng của mình. Sự kết hợp giữa các loại chướng ngại vật và sự kiện khác nhau thêm đa dạng vào lối chơi, làm cho mỗi lần chơi trở nên độc đáo. Người chơi cần có chiến thuật để đạt được điểm số cao, đồng thời liên tục thích ứng với môi trường trò chơi đang thay đổi.
